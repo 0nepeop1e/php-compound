@@ -1,0 +1,21 @@
+{
+  "name": "1ppl/utils-compound",
+  "description": "Compound",
+  "version": "0.0.1",
+  "minimum-stability": "dev",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "0nepeop1e",
+      "email": "engshun.lim@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.6"
+  },
+  "autoload": {
+    "classmap": [
+      "src"
+    ]
+  }
+}
