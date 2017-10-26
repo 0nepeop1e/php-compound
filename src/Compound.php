@@ -36,7 +36,7 @@ class Compound implements ArrayAccess, IteratorAggregate, Countable
      */
     public function set($value)
     {
-        if (!is_scalar($value) || !is_null($value)) {
+        if (!is_scalar($value) && !is_null($value)) {
             if (is_object($value)) {
                 $value = (array)$value;
             } else if (!is_array($value)) {
@@ -228,7 +228,8 @@ class Compound implements ArrayAccess, IteratorAggregate, Countable
      */
     public function offsetGet($offset)
     {
-        return new (static::proxyClass())($this, $offset);
+        $proxy_class = static::proxyClass();
+        return new $proxy_class($this, $offset);
     }
 
     /**
