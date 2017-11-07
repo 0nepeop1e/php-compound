@@ -103,6 +103,43 @@ class Compound implements ArrayAccess, IteratorAggregate, Countable
     }
 
     /**
+     * @param ?string $nonString
+     * @return string
+     */
+    public function getString($nonString = null){
+        return $this->isString() ?
+            $this->internalValue() :
+            $nonString;
+    }
+
+    /**
+     * @param int $nonInt
+     * @return int
+     */
+    public function getInt($nonInt = 0){
+        return $this->isInt() ?
+            $this->internalValue() :
+            $nonInt;
+    }
+
+    /**
+     * @param float $nonFloat
+     * @return float
+     */
+    public function getFloat($nonFloat = 0.0){
+        return $this->isFloat() ?
+            $this->internalValue() :
+            $nonFloat;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getBool(){
+        return (bool)$this->internalValue();
+    }
+
+    /**
      * @return bool
      */
     public function isPresent()
