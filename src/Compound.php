@@ -117,9 +117,9 @@ class Compound implements ArrayAccess, IteratorAggregate, Countable
      * @return int
      */
     public function getInt($nonInt = 0){
-        return $this->isInt() ?
-            $this->internalValue() :
-            $nonInt;
+        $val = &$this->internalValue();
+        $filtered = filter_var($val, FILTER_VALIDATE_INT);
+        return $filtered === false ? $nonInt : $filtered;
     }
 
     /**
@@ -127,16 +127,19 @@ class Compound implements ArrayAccess, IteratorAggregate, Countable
      * @return float
      */
     public function getFloat($nonFloat = 0.0){
-        return $this->isFloat() ?
-            $this->internalValue() :
-            $nonFloat;
+        $val = &$this->internalValue();
+        $filtered = filter_var($val, FILTER_VALIDATE_FLOAT);
+        return $filtered === false ? $nonFloat : $filtered;
     }
 
     /**
      * @return bool
      */
     public function getBool(){
-        return (bool)$this->internalValue();
+        $val = &$this->internalValue();
+        return filter_var($val,
+            FILTER_VALIDATE_BOOLEAN,
+            FILTER_NULL_ON_FAILURE);
     }
 
     /**
@@ -160,7 +163,7 @@ class Compound implements ArrayAccess, IteratorAggregate, Countable
      */
     public function isInt()
     {
-        return is_int($this->internalValue());
+        return $this->getInt(null) !== null;
     }
 
     /**
@@ -168,7 +171,7 @@ class Compound implements ArrayAccess, IteratorAggregate, Countable
      */
     public function isFloat()
     {
-        return is_float($this->internalValue());
+        return $this->getFloat(null) !== null;
     }
 
     /**
@@ -176,7 +179,7 @@ class Compound implements ArrayAccess, IteratorAggregate, Countable
      */
     public function isBool()
     {
-        return is_bool($this->internalValue());
+        return $this->getBool() !== null;
     }
 
     /**
