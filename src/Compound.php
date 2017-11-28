@@ -133,13 +133,17 @@ class Compound implements ArrayAccess, IteratorAggregate, Countable
     }
 
     /**
+     * @param bool $nonBool
      * @return bool
      */
-    public function getBool(){
+    public function getBool($nonBool = null){
+        if(!$this->isPresent())
+            return $nonBool;
         $val = &$this->internalValue();
-        return filter_var($val,
+        $bool =  filter_var($val,
             FILTER_VALIDATE_BOOLEAN,
             FILTER_NULL_ON_FAILURE);
+        return $bool === null ? $nonBool : $bool;
     }
 
     /**
